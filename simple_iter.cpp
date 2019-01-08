@@ -163,25 +163,6 @@ int main(int argc, char **argv)
 
 	double norm = 1;
 	double epsilon = pow(10., -power);
-	if (rank > 0)
-	{
-		MPI_Recv(&n, 1, MPI_INT, rank-1, 100, MPI_COMM_WORLD, &status);
-	}
-	cout << "matr " << endl;
-	for(size_t i = 0; i < mx; i++) {
-		for(size_t j = 0; j < matr_size; j++) {
-			cout << matr[i][j] << " ";
-		}
-		cout << endl;
-	}
-	cout << "b" << endl;
-	for(size_t i = 0; i < mx; i++) {
-		cout << b[i] << " ";
-	}
-	cout << endl;
-	if (rank < (size-1)) {
-		MPI_Send(&n, 1, MPI_INT, rank + 1, 100, MPI_COMM_WORLD);
-	}
 	int iter = 0;
 	do {
 		norm = 0;
@@ -199,7 +180,7 @@ int main(int argc, char **argv)
 				norm = a;
 			} 
 		}
-		MPI_Allgather(&norm, 1, MPI_DOUBLE, sendbuf, 1, MPI_DOUBLE, MPI_COMM_WORLD);
+		//MPI_Allgather(&norm, 1, MPI_DOUBLE, sendbuf, 1, MPI_DOUBLE, MPI_COMM_WORLD);
 		for(size_t i = 0; i < matr_size; i++) {
 			vec_old[i] = vec_new[i];
 		}
